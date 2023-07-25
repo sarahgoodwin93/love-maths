@@ -19,6 +19,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+/**
+ * The main game "loop", called when the script is first loaded
+ * and after the user's answer has been processed
+ */
+
 function runGame(gameType) {
 
     // Creates two random numbers between 1 and 25
@@ -34,9 +39,29 @@ function runGame(gameType) {
 
 }
 
-function checkAnswer() {
+/**
+ * Checks the answer agaist the first element in
+ * the returned calculateCorrectAnswer array
+ */
 
+function checkAnswer() {
+    let userAnswer = parseInt(document.getElementById("answer-box").value);
+    let calculatedAnswer = calculateCorrectAnswer();
+    let isCorrect = userAnswer === calculatedAnswer[0];
+
+    if (isCorrect) {
+        alert("Hey! You got it right! :D");
+    } else {
+        alert(`Awww.... you answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}!`);
+    }
+
+    runGame(calculatedAnswer[1]);
 }
+
+/**
+ * Gets the operands (the numbers) and the operator (plus, minus etc)
+ * directly from the dom, and returns the correct answer.
+ */
 
 function calculateCorrectAnswer() {
     let operand1 = parseInt(document.getElementById(`operand1`).innerText);
